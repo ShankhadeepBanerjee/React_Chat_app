@@ -6,7 +6,6 @@ import firebase, {firestore, db} from "../src/config"
 
 
 function App() {
-  // const [userName, setUserName] = useState("");
   let userName = "";
   const [chatInput, setChatInput] = useState({
     "chatText": "",
