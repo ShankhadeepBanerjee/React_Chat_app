@@ -66,4 +66,4 @@ node_modules/
 .env
 
 # hide Api keys
-config.js
+src/config.js
