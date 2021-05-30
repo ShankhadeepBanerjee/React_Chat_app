@@ -1,0 +1,11 @@
+.chatbox {
+	width: 100%;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+}
+.chatbox input {
+	flex-basis: 85%;
+	height: 40px;
+	margin: auto;
+}

@@ -1,0 +1,33 @@
+li {
+	list-style-type: none;
+	width: 100%;
+	list-style-position: inside;
+}
+h5,
+p {
+	margin: 0;
+	padding: 0;
+}
+
+.chatline {
+	border: solid 1px black;
+	border-radius: 20px;
+	padding: 5px 10px;
+	max-width: 60%;
+	/* width: fit-content; */
+	background-color: #f6e5e9;
+}
+
+.user {
+	margin: 5px 10px 5px auto;
+}
+
+.other {
+	margin: 5px auto 5px 10px;
+}
+
+.time-stamp {
+	font-size: 0.75rem;
+	color: gray;
+	text-align: right;
+}
