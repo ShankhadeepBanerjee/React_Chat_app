@@ -28,4 +28,4 @@ A Chating Web app made with React.js and Firebase
 
 
 
-*add the config.js file for firebase usage
+*add the config.js file in src folder for firebase usage
