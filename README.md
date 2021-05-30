@@ -1,1 +1,31 @@
 A Chating Web app made with React.js and Firebase
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*add the config.js file for firebase usage
