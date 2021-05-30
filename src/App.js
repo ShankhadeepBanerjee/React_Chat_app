@@ -41,7 +41,7 @@ function App() {
     chatInput.time = Date.now();
     let hrs = date.getHours();
     let min = date.getMinutes();
-    chatInput.dateTime = (hrs%12)+":"+(min)+(hrs >= 12 ? "am":"pm");
+    chatInput.dateTime = (hrs%12)+":"+(min)+(hrs >= 12 ? "pm":"am");
     setChatsList(prev=>{return([...prev, chatInput]);});
     addToDB(chatInput);
     setChatInput(prev=>{return {...prev, chatText:""}});
