@@ -1,11 +1,16 @@
 .chatbox {
-	width: 100%;
-	margin: auto;
 	display: flex;
 	justify-content: center;
+	position: fixed;
+	top: 95vh;
+	z-index: 2;
 }
-.chatbox input {
-	flex-basis: 85%;
-	height: 40px;
-	margin: auto;
+
+.chatbox-input {
+	transition: transform 300ms;
+}
+.chatbox-input:focus {
+	outline: none;
+	transform: scale(1.5);
+	margin-right: 40px;
 }

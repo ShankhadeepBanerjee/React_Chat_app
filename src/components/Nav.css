@@ -1,0 +1,37 @@
+.nav {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	background-color: blanchedalmond;
+	width: 100%;
+	min-height: 50px;
+	z-index: 1;
+}
+
+.nav button {
+	height: fit-content;
+	width: fit-content;
+	padding: 10px 30px;
+	margin: 10px 20px;
+	background-color: #f54748;
+	border-radius: 20px;
+	border-width: 0;
+}
+.nav button:hover {
+	background-color: #f58a8a;
+}
+
+.auth {
+	display: flex;
+	flex-direction: column;
+	max-width: 280px;
+}
+
+.auth button {
+	height: fit-content;
+	width: fit-content;
+	padding: 5px 20px;
+	margin-top: 10px;
+}

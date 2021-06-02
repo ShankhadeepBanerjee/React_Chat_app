@@ -1,0 +1,9 @@
+.chatList {
+	transform: translateY(60px) !important;
+	background-color: #e798ae;
+	z-index: 0;
+}
+
+.padd {
+	height: 5vh;
+}

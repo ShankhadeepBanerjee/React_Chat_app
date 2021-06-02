@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import Chatbox from "./components/Chatbox"
-import Chatline from "./components/Chatline"
+import Chatbox from "./components/Chatbox";
+import Chats from "./components/Chats"
+import Nav from "./components/Nav";
 import './App.css';
-import firebase, {firestore, db} from "../src/config" 
+import firebase, {firestore, db, auth} from "../src/config" 
+
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 
 function App() {
-  let userName = "";
   const [chatInput, setChatInput] = useState({
     "chatText": "",
     "name":"",
@@ -15,7 +19,13 @@ function App() {
   });
   const [chatsList, setChatsList] = useState([]);
 
-  
+  const [user, setUser] = useState({
+    "userName":"",
+    "email": "",
+    "password": "",
+    "signedIn":false,
+  });
+
 
 
   function handleChatInput(e) {
@@ -27,9 +37,7 @@ function App() {
   }
 
   function addToDB(mssgObj) {
-    db.collection("Chats").add(mssgObj)
-    .then((docRef)=>{console.log(docRef.id);})
-    .catch((error)=>{console.log("Erroe occured "+error);})
+    db.collection("newChats").add(mssgObj)
   }
 
   
@@ -37,50 +45,105 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
     if (chatInput.chatText === "")return
-    let date = new Date();
+    
     chatInput.time = Date.now();
-    let hrs = date.getHours();
-    let min = date.getMinutes();
-    chatInput.dateTime = (hrs%12)+":"+(min)+(hrs >= 12 ? "pm":"am");
+    chatInput.dateTime = Date().slice(0, 21)//((hrs%12)>=10?(hrs%12):"0"+(hrs%12))+":"+((min>=10? min:"0"+min))+(hrs >= 12 ? "pm":"am");
     setChatsList(prev=>{return([...prev, chatInput]);});
     addToDB(chatInput);
     setChatInput(prev=>{return {...prev, chatText:""}});
     
   }
 
-  function askUsername() {
-    userName = prompt("Enter Username: ");
-    setChatInput((prev)=>{
-      return {...prev, "name":userName};
-    });
-  }
   function fetchChats() {
-    const chatsRef = db.collection("Chats").orderBy("time");
+    const chatsRef = db.collection("newChats").orderBy("time");
     chatsRef.onSnapshot((ss)=>{
       let arr = [];
       ss.forEach((doc)=>{
         arr.push(doc.data())
       })
       setChatsList(arr);
+      scrollToBottom()
     });
   }
 
-  
-  useEffect(() => {
-    askUsername();
-    fetchChats();
+  function signUP(user) {
+    firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+    .then((userCredential) => {
+      firebase.auth().currentUser.updateProfile({
+                      displayName: user.userName,
+                  });
+      setUser((prev)=>{return{...prev, signedIn:true}})
     
-  }, []);
+    })
+    .catch((error) => {
+      var errorMessage = error.message
+      alert(errorMessage);
+    });
+  }
+
+  function signIn(user) {
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+    .then((userCredential) => {
+      setUser((prev)=>{return{...prev, signedIn:true}})
+    })
+    .catch((error) => {
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
+  }
+
+  function logOut() {
+    auth.signOut();
+    setUser({"userName":"","email": "","password": ""})
+  }
+
+  function handleUserChange(e) {
+    const {name, value} = e.target;
+    setUser((prev)=>{
+      return ({
+        ...prev,
+        [name] : value,
+      });
+    });
+  }
+
+  const actions = {
+    "signUp": signUP,
+    "signIn":signIn,
+    "logOut": logOut,
+    "handleUserChange":handleUserChange,
+  };
+
+  function scrollToBottom() {
+    const lis = document.querySelector(".chatList");
+    lis.scrollIntoView(false);
+  }
+
+  useEffect(() => {
+    auth.onAuthStateChanged(currUser=>{
+      if(currUser){
+        setUser({"userName":currUser.displayName,"email": "","password": "", signedIn:true});
+        setChatInput((prev)=>{return{...prev, name:currUser.displayName}})
+        fetchChats();
+        scrollToBottom();
+      }
+      })
+  },[]);
+
+
+  
   
 
   return (
     <div className="App">
-      <ul>
-        {chatsList.map((elem,index) => {
-          return(<Chatline mssg={elem} key={index} id={index} currentUser={chatInput.name}/>)
-        })}
-      </ul>
-    <Chatbox onchange={handleChatInput} onclick={handleSubmit} text={chatInput.chatText} name={chatInput.name}/>
+    <Nav user={user} actions={actions} />
+    {
+      (user.signedIn) &&
+    <>
+    <Chats chatList={chatsList} user={user}/>
+    <Chatbox onchange={handleChatInput} onclick={handleSubmit} text={chatInput.chatText}/>
+    </> 
+    }
     </div>
   );
 }

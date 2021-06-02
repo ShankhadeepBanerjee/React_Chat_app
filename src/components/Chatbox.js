@@ -4,11 +4,12 @@ import './Chatbox.css';
 
 function Chatbox(props){
     return(
-        <form action="" className="chatbox">
-        <input type="text" onChange={props.onchange} placeholder="Text" name="chatText" value={props.text} />
-        {/* <input type="text" onChange={props.onchange} placeholder="Sender" name="name" value={props.name} /> */}
+      <div className="chatbox">
+        <form action="" className="chatbox-form">
+        <input className="chatbox-input" type="text" onChange={props.onchange} placeholder="Text" name="chatText" value={props.text} />
         <button onClick={props.onclick}>send</button>
       </form>
+      </div>
     );
 }
 
