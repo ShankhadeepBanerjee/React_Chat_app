@@ -7,7 +7,6 @@ import "./Chats.css"
 
 function Chats(props) {
     return(
-        (props.user.signedIn) &&
         <ul className="chatList">
         {props.chatList.map((elem,index) => {
           return(<Chatline mssg={elem} key={index} id={index} currentUser={props.user.userName}/>)

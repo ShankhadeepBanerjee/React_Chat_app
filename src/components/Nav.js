@@ -10,6 +10,9 @@ function Nav(props) {
     const [open, setOpen] = useState(false);
     const [option, setOption] = useState("");
 
+
+    console.log(props.currUser, " Inside Nav");
+
     function handleSubmit(e, type) {
         e.preventDefault();
         if (!(props.user.email && props.user.password))return
@@ -18,7 +21,7 @@ function Nav(props) {
 
     return (
     <div className="nav">
-        {(!props.user.signedIn) ? 
+        {(!props.currUser) ? 
         //if not signed in
         <><button type="button" onClick={()=>{setOpen(true); setOption("Sign In")}}>
             Sign In
@@ -30,7 +33,8 @@ function Nav(props) {
         :
         //If signed in
         <>
-        <h3>User: <b>{props.user.userName}</b> </h3>
+        {console.log(props.currUser, " Inside Nav else")}
+        <h3>User: <b>{props.currUser.displayName}</b> </h3>
         <button type="button" onClick={(e)=>{setOption("Log Out"); props.actions.logOut()}}>
             Log Out
         </button>
@@ -57,7 +61,7 @@ function Nav(props) {
             {(option === "Sign Up") && 
                 <>
                 <label htmlFor="userName">Username:</label>
-                <input type="text" name="userName" value={props.user.userName} onChange={props.actions.handleUserChange} />
+                <input type="text" name="userName" value={props.user.name} onChange={props.actions.handleUserChange} />
                 </>
             }
             <label htmlFor="email">Email:</label>
