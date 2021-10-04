@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // firestore tools
 import { db } from "../../firebaseConfig";
-import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 
 // states
 import { selectUser } from "../../features/userSlice";
+import { addContact } from "../../features/contactsSlice";
 import { createChatDoc, userExists } from "../../tools/FirestoreTools";
 
 export function AddContact() {
 	const user = useSelector(selectUser);
+	const dispatch = useDispatch();
 	const [contactFormOpen, setContactFormOpen] = useState(false);
 	const [newContact, setNewContact] = useState({
 		name: "",
@@ -39,6 +41,7 @@ export function AddContact() {
 			await updateDoc(doc(db, `Users/`, user.email), {
 				contacts: arrayUnion(bufferContact),
 			});
+			dispatch(addContact(bufferContact));
 		} else {
 			alert("This user doesn't exist!!!");
 			return;

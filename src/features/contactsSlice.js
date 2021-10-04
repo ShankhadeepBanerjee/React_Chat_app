@@ -8,6 +8,7 @@ const contactsSlice = createSlice({
 	},
 	reducers: {
 		addContact: (state, action) => {
+			console.log("adding contact");
 			state.contactList.push(action.payload);
 		},
 		populateContacts: (state, action) => {
