@@ -2,4 +2,7 @@
 	height: 10vh;
 	background: black;
 	padding: 10px;
+	display: flex;
+	align-items: center;
+	color: honeydew;
 }

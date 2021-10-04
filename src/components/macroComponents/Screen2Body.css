@@ -9,6 +9,27 @@
 .chats {
 	/* height: 80%; */
 	/* overflow: scroll; */
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+}
+.chats > div {
+	padding: 10px;
+	background-color: white;
+	width: fit-content;
+	margin: 1vw;
+}
+.chats > .from {
+	align-self: flex-end;
+}
+
+.chats > .to {
+	align-self: flex-start;
+}
+
+.chats .chat-time {
+	font-size: 0.7rem;
+	color: grey;
 }
 
 .chat-input {

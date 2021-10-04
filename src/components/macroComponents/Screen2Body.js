@@ -39,12 +39,21 @@ export default function Screen2Body() {
 					[partner.email] in conversation.chats &&
 					conversation.chats[partner.email].map((chat, idx) => {
 						return (
-							<div key={idx}>
+							<div
+								key={idx}
+								className={
+									chat.from === user.email ? "from" : "to"
+								}
+							>
 								<p>{chat.content}</p>
+								<p className="chat-time">
+									<i>{chat.time}</i>
+								</p>
 							</div>
 						);
 					})}
 			</div>
+			<div>||||||||||||||||||||||||||||||||||||</div>
 
 			{partner && (
 				<div className="chat-input">

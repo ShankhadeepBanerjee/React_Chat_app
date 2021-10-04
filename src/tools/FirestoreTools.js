@@ -28,11 +28,16 @@ async function userExists(userEmail) {
 async function createChatDoc(p1, p2) {
 	let docRef = doc(db, `Users/${p1}/Chats`, p2);
 	let docSnap = await getDoc(docRef);
-	if (docSnap.exists()) return;
+	if (docSnap.exists()) {
+		console.log("already exists");
+		return;
+	}
+	console.log(`Creating Chatdoc for ${p1} => ${p2}`);
 	await setDoc(docRef, { chats: [] });
-	// onSnapshot;
 }
 async function addChatToDb(p1, p2, chat) {
+	await createChatDoc(p2, p1);
+	console.log("adding Chat");
 	let docRefp1 = doc(db, `Users/${p1}/Chats`, p2);
 	let docRefp2 = doc(db, `Users/`, p2);
 	await updateDoc(docRefp1, { chats: arrayUnion(chat) });
