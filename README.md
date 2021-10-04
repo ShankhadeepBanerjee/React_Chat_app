@@ -1,15 +1,3 @@
-# Todo App
-
-A Todo Web App made with React.js and Firebase.
-
-User can Create, Edit, Delete Todos.
-User can also embed image in a Todo.
-
-## Site Link: https://todo-app-21b75.web.app/
-
-![Alt](img/Screen2.png?raw=true)
-![Alt](img/Screen.png?raw=true)
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
