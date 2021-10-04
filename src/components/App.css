@@ -1,0 +1,5 @@
+.app {
+	display: flex;
+	height: fit-content;
+	overflow: auto;
+}

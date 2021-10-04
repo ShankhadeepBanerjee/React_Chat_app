@@ -1,0 +1,23 @@
+.convrsation {
+	height: 90vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative;
+}
+
+.chats {
+	/* height: 80%; */
+	/* overflow: scroll; */
+}
+
+.chat-input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	bottom: 5px;
+	left: 50%;
+	transform: translateX(50%);
+	margin: 0 auto;
+}

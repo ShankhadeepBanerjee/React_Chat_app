@@ -1,0 +1,6 @@
+.screen1 {
+	width: 40%;
+	height: fit-content;
+	border: solid 1px black;
+	position: relative;
+}

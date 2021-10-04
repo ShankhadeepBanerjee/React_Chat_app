@@ -1,0 +1,7 @@
+.sc1-nav {
+	height: 10vh;
+	background: grey;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
