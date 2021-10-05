@@ -10,10 +10,13 @@ export default function Nav2() {
 	console.log(conversation.partner);
 	return (
 		<div className="sc2-nav">
+			<button>Back</button>
 			{conversation.partner !== null && (
-				<ProfilePic pic={conversation.partner.pic} />
+				<>
+					<ProfilePic pic={conversation.partner.pic} />
+					<p>{conversation.partner.name}</p>
+				</>
 			)}
-			<p>{conversation.partner.name}</p>
 		</div>
 	);
 }

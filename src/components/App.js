@@ -4,7 +4,11 @@ import Screen1 from "../components/layout/Screen1";
 import Screen2 from "../components/layout/Screen2";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, signInUser, signOutUser } from "../features/userSlice";
-import { createUserIfNotExistsInDb, userExists } from "../tools/FirestoreTools";
+import {
+	addChatToDb,
+	createUserIfNotExistsInDb,
+	userExists,
+} from "../tools/FirestoreTools";
 import { arrayUnion, doc, onSnapshot, updateDoc } from "@firebase/firestore";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "@firebase/auth";
@@ -57,6 +61,7 @@ export default function App() {
 							.messageQueue.forEach((message) => {
 								dispatch(addChat(message));
 								(async () => {
+									await addChatToDb();
 									await updateDoc(
 										doc(
 											db,

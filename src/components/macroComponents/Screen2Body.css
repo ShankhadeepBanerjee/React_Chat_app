@@ -1,44 +1,16 @@
 .convrsation {
-	height: 90vh;
+	height: 87vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	position: relative;
-}
-
-.chats {
-	/* height: 80%; */
-	/* overflow: scroll; */
-	display: flex;
-	flex-direction: column;
-	overflow-y: scroll;
-}
-.chats > div {
-	padding: 10px;
-	background-color: white;
-	width: fit-content;
-	margin: 1vw;
-}
-.chats > .from {
-	align-self: flex-end;
-}
-
-.chats > .to {
-	align-self: flex-start;
-}
-
-.chats .chat-time {
-	font-size: 0.7rem;
-	color: grey;
+	overflow-y: hidden;
 }
 
 .chat-input {
+	height: 50px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
-	bottom: 5px;
-	left: 50%;
-	transform: translateX(50%);
-	margin: 0 auto;
+	background-color: black;
 }

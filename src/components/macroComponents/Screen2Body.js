@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addChat, selectConversation } from "../../features/conversationSlice";
 import { selectUser } from "../../features/userSlice";
+import { auth } from "../../firebaseConfig";
 import { addChatToDb } from "../../tools/FirestoreTools";
+import Chats from "../microComponents/Chats";
 
 // css
 import "./Screen2Body.css";
 
 export default function Screen2Body() {
-	const user = useSelector(selectUser);
+	// const user = useSelector(selectUser);
 	const dispatch = useDispatch();
+	const user = auth.currentUser;
 	const conversation = useSelector(selectConversation);
 	const partner = conversation.partner;
 
@@ -34,30 +37,15 @@ export default function Screen2Body() {
 
 	return (
 		<div className="convrsation">
-			<div className="chats">
-				{partner &&
-					[partner.email] in conversation.chats &&
-					conversation.chats[partner.email].map((chat, idx) => {
-						return (
-							<div
-								key={idx}
-								className={
-									chat.from === user.email ? "from" : "to"
-								}
-							>
-								<p>{chat.content}</p>
-								<p className="chat-time">
-									<i>{chat.time}</i>
-								</p>
-							</div>
-						);
-					})}
-			</div>
-			<div>||||||||||||||||||||||||||||||||||||</div>
+			{partner && <Chats />}
 
 			{partner && (
 				<div className="chat-input">
-					<form action="" onSubmit={handleSubmit}>
+					<form
+						action=""
+						onSubmit={handleSubmit}
+						className="chat-input-box"
+					>
 						<input
 							type="text"
 							name="chatInput"

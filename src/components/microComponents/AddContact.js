@@ -1,17 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-// firestore tools
-import { db } from "../../firebaseConfig";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { useDispatch } from "react-redux";
 
 // states
-import { selectUser } from "../../features/userSlice";
 import { addContact } from "../../features/contactsSlice";
-import { createChatDoc, userExists } from "../../tools/FirestoreTools";
+import { addContactToDb } from "../../tools/FirestoreTools";
 
 export function AddContact() {
-	const user = useSelector(selectUser);
 	const dispatch = useDispatch();
 	const [contactFormOpen, setContactFormOpen] = useState(false);
 	const [newContact, setNewContact] = useState({
@@ -31,23 +25,10 @@ export function AddContact() {
 		});
 	}
 
-	async function addContactToDb(contact) {
-		if (!contact.name || !contact.email) return;
-		const existUser = await userExists(contact.email);
-
-		let bufferContact;
-		if (existUser) {
-			bufferContact = { ...contact, pic: existUser.photoURL };
-			await updateDoc(doc(db, `Users/`, user.email), {
-				contacts: arrayUnion(bufferContact),
-			});
-			dispatch(addContact(bufferContact));
-		} else {
-			alert("This user doesn't exist!!!");
-			return;
-		}
+	async function addNewContact(contact) {
+		let contactAdded = await addContactToDb(contact);
+		if (contactAdded) dispatch(addContact(contactAdded));
 		setNewContact({ name: "", email: "", pic: "" });
-		await createChatDoc(user.email, contact.email);
 	}
 
 	return (
@@ -62,7 +43,7 @@ export function AddContact() {
 						action=""
 						onSubmit={(e) => {
 							e.preventDefault();
-							addContactToDb(newContact);
+							addNewContact(newContact);
 							setContactFormOpen(false);
 						}}
 					>

@@ -1,6 +1,12 @@
 .screen2 {
 	width: 60%;
-	height: fit-content;
+	height: 100vh;
 	background: #d3e0d9;
-	border: solid 1px black;
+}
+
+@media screen and (max-width: 580px) {
+	.screen2 {
+		position: absolute;
+		z-index: 0;
+	}
 }
