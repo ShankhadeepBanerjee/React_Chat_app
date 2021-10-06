@@ -1,12 +1,14 @@
 .screen2 {
 	width: 60%;
-	height: 100vh;
+	height: inherit;
 	background: #d3e0d9;
 }
 
 @media screen and (max-width: 580px) {
 	.screen2 {
+		width: 100%;
 		position: absolute;
+		top: 0;
 		z-index: 0;
 	}
 }

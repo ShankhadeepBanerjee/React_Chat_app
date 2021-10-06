@@ -1,8 +1,10 @@
 .screen1 {
 	width: 40%;
-	height: 100vh;
+	height: inherit;
 	position: relative;
 	background-color: rgb(188, 154, 212);
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 @media screen and (max-width: 580px) {

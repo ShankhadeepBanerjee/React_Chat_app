@@ -1,7 +1,7 @@
 .sc2-nav {
 	height: 10vh;
 	background: black;
-	padding: 10px;
+	padding: 0 10px;
 	display: flex;
 	align-items: center;
 	color: honeydew;

@@ -25,29 +25,36 @@ async function userExists(userEmail) {
 	return false;
 }
 
-async function createChatDocIfNotExist(p1, p2) {
-	let docRef = doc(db, `Users/${p1}/Chats`, p2);
-	let docSnap = await getDoc(docRef);
+async function createChatDocOfSenderAndReceiverIfNotExist(Sender, Receiver) {
+	let docRef1 = doc(db, `Users/${Sender}/Chats`, Receiver);
+	let docRef2 = doc(db, `Users/${Receiver}/Chats`, Sender);
+	let docSnap = await getDoc(docRef1);
 	if (docSnap.exists()) {
 		console.log("already exists");
 		return { exists: true };
 	}
-	console.log(`Creating Chatdoc for ${p1} => ${p2}`);
-	await setDoc(docRef, { chats: [] });
+	console.log(`Creating Chatdoc for ${Sender} and ${Receiver}`);
+	await setDoc(docRef1, { chats: [] });
+	await setDoc(docRef2, { chats: [] });
 	return { exists: false };
 }
-async function addChatToDb(p1, p2, chat) {
-	await createChatDocIfNotExist(p2, p1);
+async function addChatToSenderAndReceiverDb(Sender, Receiver, chat) {
+	// await createChatDocOfSenderAndReceiverIfNotExist(Sender, Receiver);
 	console.log("adding Chat");
-	let docRefp1 = doc(db, `Users/${p1}/Chats`, p2);
-	let docRefp2 = doc(db, `Users/`, p2);
-	await updateDoc(docRefp1, { chats: arrayUnion(chat) });
-	await updateDoc(docRefp2, { messageQueue: arrayUnion(chat) });
+	let docRefSender = doc(db, `Users/${Sender}/Chats`, Receiver);
+	let docRefReceiver = doc(db, `Users/${Receiver}/Chats`, Sender);
+	await updateDoc(docRefSender, { chats: arrayUnion(chat) });
+	await updateDoc(docRefReceiver, { chats: arrayUnion(chat) });
+
+	// This is so that Reciever gets new messages, while online,
+	// without lisening to db for every specific contact
+	let docRefp3 = doc(db, `Users/`, Receiver);
+	await updateDoc(docRefp3, { messageQueue: arrayUnion(chat) });
 }
 
-async function getChats(p1, p2) {
+async function getChats(Sender, Receiver) {
 	console.log("fetching");
-	const docRef = doc(db, `Users/${p1}/Chats`, p2);
+	const docRef = doc(db, `Users/${Sender}/Chats`, Receiver);
 	const snapShot = await getDoc(docRef);
 	return snapShot.data().chats;
 }
@@ -60,12 +67,18 @@ async function addContactToDb(contact) {
 	let bufferContact;
 	if (existUser) {
 		bufferContact = { ...contact, pic: existUser.photoURL };
-		await updateDoc(doc(db, `Users/`, user.email), {
-			contacts: arrayUnion(bufferContact),
-		});
-		let res = await createChatDocIfNotExist(user.email, contact.email);
-		if (!res.exists) return bufferContact;
-		else return false;
+		await setDoc(
+			doc(db, `Users/`, user.email),
+			{
+				contacts: { [bufferContact.email]: bufferContact },
+			},
+			{ merge: true }
+		);
+		await createChatDocOfSenderAndReceiverIfNotExist(
+			user.email,
+			contact.email
+		);
+		return bufferContact;
 	} else {
 		alert("This user doesn't exist!!!");
 		return false;
@@ -75,8 +88,8 @@ async function addContactToDb(contact) {
 export {
 	createUserIfNotExistsInDb,
 	userExists,
-	createChatDocIfNotExist,
-	addChatToDb,
+	createChatDocOfSenderAndReceiverIfNotExist,
+	addChatToSenderAndReceiverDb,
 	addContactToDb,
 	getChats,
 };

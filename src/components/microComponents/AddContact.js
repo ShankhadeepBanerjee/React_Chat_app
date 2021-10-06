@@ -26,8 +26,14 @@ export function AddContact() {
 	}
 
 	async function addNewContact(contact) {
+		for (let item in contact) {
+			if (item != "pic" && !contact[item]) {
+				console.log(newContact);
+				return;
+			}
+		}
 		let contactAdded = await addContactToDb(contact);
-		if (contactAdded) dispatch(addContact(contactAdded));
+		dispatch(addContact(contactAdded));
 		setNewContact({ name: "", email: "", pic: "" });
 	}
 

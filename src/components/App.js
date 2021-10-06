@@ -60,17 +60,17 @@ export default function App() {
 							.data()
 							.messageQueue.forEach((message) => {
 								dispatch(addChat(message));
-								(async () => {
-									await addChatToDb();
-									await updateDoc(
-										doc(
-											db,
-											`Users/${message.to}/Chats`,
-											message.from
-										),
-										{ chats: arrayUnion(message) }
-									);
-								})();
+								// (async () => {
+								// 	await addChatToDb(message.from, message.to, message);
+								// 	await updateDoc(
+								// 		doc(
+								// 			db,
+								// 			`Users/${message.to}/Chats`,
+								// 			message.from
+								// 		),
+								// 		{ chats: arrayUnion(message) }
+								// 	);
+								// })();
 							});
 						await updateDoc(doc(db, "Users", user.email), {
 							messageQueue: [],

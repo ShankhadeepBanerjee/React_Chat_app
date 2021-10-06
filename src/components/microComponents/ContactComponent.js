@@ -15,7 +15,14 @@ export default function ContactComponent(props) {
 	const user = useSelector(selectUser);
 	const { pic, name, email } = props.propObj;
 	const dispatch = useDispatch();
+
+	function showScreen2() {
+		const elem = document.querySelector(".screen2");
+		elem.style["z-index"] = "2";
+	}
+
 	function handleClick() {
+		showScreen2();
 		dispatch(setPartner(props.propObj));
 		if (email in conversation.chats) return;
 		(async () => {
@@ -23,6 +30,7 @@ export default function ContactComponent(props) {
 			dispatch(setChatsFor({ to: email, chats: chatsArray }));
 		})();
 	}
+
 	return (
 		<div className="contact-component" onClick={handleClick}>
 			<div className="contact-img">

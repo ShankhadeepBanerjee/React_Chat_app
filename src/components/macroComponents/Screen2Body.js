@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addChat, selectConversation } from "../../features/conversationSlice";
 import { selectUser } from "../../features/userSlice";
 import { auth } from "../../firebaseConfig";
-import { addChatToDb } from "../../tools/FirestoreTools";
+import { addChatToSenderAndReceiverDb } from "../../tools/FirestoreTools";
 import Chats from "../microComponents/Chats";
 
 // css
@@ -30,7 +30,7 @@ export default function Screen2Body() {
 			from: user.email,
 			to: partner.email,
 		};
-		addChatToDb(user.email, partner.email, chatObj);
+		addChatToSenderAndReceiverDb(user.email, partner.email, chatObj);
 		dispatch(addChat(chatObj));
 		setChatInput("");
 	}

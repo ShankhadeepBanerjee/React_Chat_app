@@ -11,14 +11,14 @@ export default function Nav1() {
 
 	return (
 		<div className="sc1-nav">
-			<a
-				href="#"
+			<div
 				onClick={() => {
 					dispatch(togglePropertyState("setUpProfile"));
 				}}
+				style={{ height: "inherit", cursor: "pointer" }}
 			>
 				<ProfilePic pic={user.pic} />
-			</a>
+			</div>
 			<p>{user.name}</p>
 			<button
 				onClick={() => {

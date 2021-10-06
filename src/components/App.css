@@ -1,5 +1,4 @@
 .app {
 	display: flex;
-	height: fit-content;
-	overflow: hidden;
+	height: 99vh;
 }

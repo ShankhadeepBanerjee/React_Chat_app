@@ -21,8 +21,13 @@ export default function ContactsList() {
 			<AddContact />
 
 			<div>
-				{contacts.contactList.map((contact, idx) => {
-					return <ContactComponent propObj={contact} key={idx} />;
+				{Object.keys(contacts.contactList).map((contact, idx) => {
+					return (
+						<ContactComponent
+							propObj={contacts.contactList[contact]}
+							key={idx}
+						/>
+					);
 				})}
 			</div>
 		</div>

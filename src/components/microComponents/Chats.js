@@ -22,7 +22,6 @@ export default function Chats() {
 	};
 
 	const Messages = (props) => {
-		console.log(props.messages);
 		return (
 			<>
 				{props.messages.map((chat, idx) => {
@@ -44,7 +43,13 @@ export default function Chats() {
 	};
 
 	return (
-		<div className="chats">
+		<div
+			className="chats"
+			onLoad={(e) => {
+				e.stopPropagation();
+				e.preventDefault();
+			}}
+		>
 			{partner && [partner.email] in conversation.chats && (
 				<Messages messages={conversation.chats[partner.email]} />
 			)}

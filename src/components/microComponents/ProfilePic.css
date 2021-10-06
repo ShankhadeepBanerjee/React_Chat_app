@@ -1,4 +1,9 @@
 .profile-pic-1 {
-  border-radius: 50%;
-  height: 10vh;
+	height: inherit;
+}
+.profile-pic-1 > img {
+	height: inherit;
+	object-fit: contain;
+	border-radius: 50%;
+	/* display: none; */
 }

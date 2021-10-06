@@ -25,11 +25,11 @@
 	opacity: 1;
 }
 .chats {
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
 	overflow-x: hidden;
+	height: auto;
 }
 .chats > div {
 	padding: 10px;

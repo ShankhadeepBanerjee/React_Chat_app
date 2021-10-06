@@ -18,14 +18,17 @@ const conversationSlice = createSlice({
 		},
 		addChat: (state, action) => {
 			let message = action.payload;
-			let from =
+			let chatToAdd =
 				message["from"] === auth.currentUser.email
 					? message["to"]
 					: message["from"];
 			{
-				state.chats[from]
-					? (state.chats[from] = [...state.chats[from], message])
-					: (state.chats[from] = [message]);
+				state.chats[chatToAdd]
+					? (state.chats[chatToAdd] = [
+							...state.chats[chatToAdd],
+							message,
+					  ])
+					: (state.chats[chatToAdd] = [message]);
 			}
 		},
 		resetConversation: (state) => {

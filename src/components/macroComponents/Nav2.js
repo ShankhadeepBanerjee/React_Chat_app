@@ -7,10 +7,15 @@ import "./Nav2.css";
 
 export default function Nav2() {
 	const conversation = useSelector(selectConversation);
-	console.log(conversation.partner);
+
+	function hideScreen2() {
+		const elem = document.querySelector(".screen2");
+		elem.style["z-index"] = "0";
+	}
+
 	return (
 		<div className="sc2-nav">
-			<button>Back</button>
+			<button onClick={hideScreen2}>Back</button>
 			{conversation.partner !== null && (
 				<>
 					<ProfilePic pic={conversation.partner.pic} />
