@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { db } from "../../firebaseConfig";
 import "./Home.css";
+import launchImg from "./launch.svg";
 
 import {
 	signInWithGoogle,
@@ -20,7 +21,21 @@ export default function Home() {
 
 	return (
 		<div className="home">
-			<button onClick={signInWithGoogle}>Sign In</button>
+			<div className="home__left">
+				<img src={launchImg} alt="" />
+			</div>
+			<div className="home__right">
+				<div className="logIn__container">
+					<h1>Welcome</h1>
+					<div className="log_in_btn" onClick={signInWithGoogle}>Log In</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+
+{/* <button onClick={signInWithGoogle}>Sign In</button>
 			<button onClick={firebaseSignOut}>SignOut</button>
 			<button
 				onClick={() => {
@@ -28,7 +43,4 @@ export default function Home() {
 				}}
 			>
 				Get User
-			</button>
-		</div>
-	);
-}
+			</button> */}
