@@ -1,7 +1,21 @@
 .sc1-nav {
 	height: 10vh;
-	background: grey;
+	background: rgb(226, 223, 223);
 	padding: 10px;
 	display: flex;
 	align-items: center;
+}
+
+.nav-user {
+	flex: 23;
+	display: flex;
+	align-items: center;
+}
+.nav-options {
+	flex: 1;
+	display: flex;
+	justify-content: space-around;
+}
+.nav-options > * {
+	cursor: pointer;
 }

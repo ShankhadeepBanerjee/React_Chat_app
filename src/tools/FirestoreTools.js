@@ -1,5 +1,11 @@
 import { auth, db } from "../firebaseConfig";
-import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import {
+	doc,
+	getDoc,
+	setDoc,
+	arrayUnion,
+	writeBatch,
+} from "firebase/firestore";
 
 async function createUserIfNotExistsInDb(currentUser) {
 	const { displayName, photoURL, email } = currentUser;
@@ -13,6 +19,7 @@ async function createUserIfNotExistsInDb(currentUser) {
 		email,
 		contacts: [],
 		messageQueue: [],
+		RecentChats: {},
 	});
 }
 
@@ -40,16 +47,35 @@ async function createChatDocOfSenderAndReceiverIfNotExist(Sender, Receiver) {
 }
 async function addChatToSenderAndReceiverDb(Sender, Receiver, chat) {
 	// await createChatDocOfSenderAndReceiverIfNotExist(Sender, Receiver);
+	const batch = writeBatch(db);
 	console.log("adding Chat");
 	let docRefSender = doc(db, `Users/${Sender}/Chats`, Receiver);
 	let docRefReceiver = doc(db, `Users/${Receiver}/Chats`, Sender);
-	await updateDoc(docRefSender, { chats: arrayUnion(chat) });
-	await updateDoc(docRefReceiver, { chats: arrayUnion(chat) });
+	batch.update(docRefSender, { chats: arrayUnion(chat) });
+	batch.update(docRefReceiver, { chats: arrayUnion(chat) });
 
 	// This is so that Reciever gets new messages, while online,
 	// without lisening to db for every specific contact
-	let docRefp3 = doc(db, `Users/`, Receiver);
-	await updateDoc(docRefp3, { messageQueue: arrayUnion(chat) });
+	// inserting chats to "messageQueue" and "RecentChats" of receiver and Sender
+	let docRefp3 = doc(db, `Users/`, Sender);
+	batch.set(
+		docRefp3,
+		{
+			RecentChats: { [`${Receiver}`]: chat },
+		},
+		{ merge: true }
+	);
+	let docRefp4 = doc(db, `Users/`, Receiver);
+	batch.set(
+		docRefp4,
+		{
+			messageQueue: arrayUnion(chat),
+			RecentChats: { [`${Sender}`]: chat },
+		},
+		{ merge: true }
+	);
+
+	await batch.commit();
 }
 
 async function getChats(Sender, Receiver) {

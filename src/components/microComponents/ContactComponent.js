@@ -1,34 +1,21 @@
-import {
-	selectConversation,
-	setChatsFor,
-	setPartner,
-} from "../../features/conversationSlice";
-
-import { selectUser } from "../../features/userSlice";
+import { selectConversation } from "../../features/conversationSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 // css
 import "./ContactComponent.css";
-import { getChats } from "../../tools/FirestoreTools";
+import { getChatsForAPersoneAndShowOnChatsScreen } from "../../tools/AppSpecificTools";
+
 export default function ContactComponent(props) {
 	const conversation = useSelector(selectConversation);
-	const user = useSelector(selectUser);
-	const { pic, name, email } = props.propObj;
+	const { pic, name } = props.contact;
 	const dispatch = useDispatch();
 
-	function showScreen2() {
-		const elem = document.querySelector(".screen2");
-		elem.style["z-index"] = "2";
-	}
-
 	function handleClick() {
-		showScreen2();
-		dispatch(setPartner(props.propObj));
-		if (email in conversation.chats) return;
-		(async () => {
-			const chatsArray = await getChats(user.email, email);
-			dispatch(setChatsFor({ to: email, chats: chatsArray }));
-		})();
+		getChatsForAPersoneAndShowOnChatsScreen(
+			props.contact,
+			conversation,
+			dispatch
+		);
 	}
 
 	return (
@@ -40,6 +27,7 @@ export default function ContactComponent(props) {
 			<div>
 				<p>{name}</p>
 			</div>
+			<div>{props.chat}</div>
 		</div>
 	);
 }

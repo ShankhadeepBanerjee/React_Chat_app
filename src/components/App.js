@@ -14,7 +14,12 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth, db } from "../firebaseConfig";
 import { populateContacts, resetContact } from "../features/contactsSlice";
-import { addChat, resetConversation } from "../features/conversationSlice";
+import {
+	addChat,
+	resetConversation,
+	setRecentChats,
+} from "../features/conversationSlice";
+import RecentChats from "./microComponents/RecentChats";
 
 export default function App() {
 	// All the useEffects and Listeners are here
@@ -55,22 +60,13 @@ export default function App() {
 			user.signedIn &&
 				(await userExists(user.email)) &&
 				onSnapshot(doc(db, "Users", user.email), (snapShot) => {
+					console.log(`Listening to ${user.email}'s data`);
+					dispatch(setRecentChats(snapShot.data().RecentChats));
 					(async () => {
 						await snapShot
 							.data()
 							.messageQueue.forEach((message) => {
 								dispatch(addChat(message));
-								// (async () => {
-								// 	await addChatToDb(message.from, message.to, message);
-								// 	await updateDoc(
-								// 		doc(
-								// 			db,
-								// 			`Users/${message.to}/Chats`,
-								// 			message.from
-								// 		),
-								// 		{ chats: arrayUnion(message) }
-								// 	);
-								// })();
 							});
 						await updateDoc(doc(db, "Users", user.email), {
 							messageQueue: [],

@@ -1,10 +1,8 @@
-import ContactsList from "../microComponents/ContactsList";
-import ChatsList from "../microComponents/ChatsList";
-
+import RecentChats from "../microComponents/RecentChats";
 export default function Screen1Body() {
 	return (
 		<div className="sc1-body">
-			<ChatsList />
+			<RecentChats />
 		</div>
 	);
 }

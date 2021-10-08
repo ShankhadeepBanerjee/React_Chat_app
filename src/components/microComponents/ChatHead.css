@@ -1,0 +1,21 @@
+.chat-head {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	grid-auto-rows: minmax(20px, 50px);
+	background-color: white;
+	border-bottom: solid 0.5px rgba(202, 200, 200, 0.692);
+	cursor: pointer;
+	padding: 0 10px;
+}
+
+.chat-head > :nth-child(1) {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.chat-head > :nth-child(2) {
+	padding: 0 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

@@ -6,6 +6,7 @@ const conversationSlice = createSlice({
 	initialState: {
 		partner: null,
 		chats: {},
+		recentChats: {},
 	},
 	reducers: {
 		setPartner: (state, action) => {
@@ -30,10 +31,20 @@ const conversationSlice = createSlice({
 					  ])
 					: (state.chats[chatToAdd] = [message]);
 			}
+			state.recentChats = {
+				...state.recentChats,
+				[chatToAdd]: message,
+			};
+		},
+
+		setRecentChats: (state, action) => {
+			const recentChatsFromDb = action.payload;
+			state.recentChats = recentChatsFromDb;
 		},
 		resetConversation: (state) => {
 			state.partner = null;
 			state.chats = {};
+			state.recentChats = {};
 		},
 	},
 });
@@ -42,6 +53,7 @@ export const {
 	setPartner,
 	addChat,
 	setChatsFor,
+	setRecentChats,
 	resetConversation,
 } = conversationSlice.actions;
 export const selectConversation = (state) => state.conversation;

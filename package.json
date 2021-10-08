@@ -5,6 +5,10 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/material": "^5.0.2",
     "@reduxjs/toolkit": "1.6.1",
     "firebase": "^9.1.0",
     "react": "17.0.2",

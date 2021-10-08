@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { auth } from "../firebaseConfig";
-import { getContactsForUser } from "../tools/FirestoreTools";
-
+import { enableMapSet } from "immer";
+enableMapSet();
 const contactsSlice = createSlice({
 	name: "contacts",
 	initialState: {
-		contactList: {},
+		contactList: new Object(),
 	},
 	reducers: {
 		addContact: (state, action) => {
@@ -14,16 +14,18 @@ const contactsSlice = createSlice({
 				alert("Cant add own contact");
 				return;
 			}
-			console.log("adding contact", contact.email in state.contactList);
-			if (state.contactList[contact.email])
-				alert("Contact already exists");
-			else state.contactList[contact.email] = contact;
+			if (!!state.contactList[contact.email]) {
+				alert("Already user exists!!!");
+				return;
+			}
+			state.contactList[contact.email] = contact;
 		},
 		populateContacts: (state, action) => {
-			state.contactList = action.payload;
+			state.contactList = { ...action.payload };
 		},
 		resetContact: (state) => {
-			state.contactList = [];
+			console.log("Reseting");
+			state.contactList = new Object();
 		},
 	},
 });

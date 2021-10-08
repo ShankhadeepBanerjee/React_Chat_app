@@ -1,8 +1,24 @@
 .sc2-nav {
 	height: 10vh;
 	background: black;
-	padding: 0 10px;
 	display: flex;
 	align-items: center;
-	color: honeydew;
+	color: rgb(242, 243, 242);
+}
+
+.sc2-nav > :nth-child(1) {
+	flex: 9;
+	display: flex;
+	align-items: center;
+}
+
+.sc2-nav > :nth-child(2) {
+	flex: 1;
+}
+
+.nav2-back-btn {
+	font-size: small;
+	color: white;
+	width: 20px;
+	height: 20px;
 }

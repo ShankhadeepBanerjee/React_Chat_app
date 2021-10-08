@@ -24,7 +24,7 @@ export default function ContactsList() {
 				{Object.keys(contacts.contactList).map((contact, idx) => {
 					return (
 						<ContactComponent
-							propObj={contacts.contactList[contact]}
+							contact={contacts.contactList[contact]}
 							key={idx}
 						/>
 					);
