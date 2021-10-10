@@ -32,7 +32,17 @@ export default function ChatHead(props) {
 	}
 
 	return (
-		<div className="chat-head" onClick={handleClick}>
+		<div
+			className={
+				"chat-head " +
+				(contactOfTheChat &&
+				conversation.partner &&
+				conversation.partner.email === contactOfTheChat.email
+					? "active-chat"
+					: "")
+			}
+			onClick={handleClick}
+		>
 			{contactOfTheChat && (
 				<>
 					<div>

@@ -24,20 +24,56 @@
 	background: #555;
 	opacity: 1;
 }
+/*******************************************************************/
+
+/* This is Chats section  */
 .chats {
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
 	overflow-x: hidden;
-	height: auto;
+	background-image: url("../../Assets/whatsapp-chat-background-pattern.png");
+	background-size: cover;
 }
-.chats > div {
+.message-element {
+	display: flex;
+	margin: 5px 5px;
+}
+.message-element > .main-body {
 	padding: 10px;
 	background-color: white;
 	width: fit-content;
-	margin: 1vw;
+	max-width: 80%;
+	border-radius: 10px;
+	box-shadow: 0 1px 2px grey;
+	display: flex;
+	flex-direction: column;
+}
+
+.from .main-body {
+	border-top-right-radius: 0;
+	background-color: #dcf8c6;
+}
+
+.to .main-body {
+	border-top-left-radius: 0;
+}
+.from .message-element-tail {
+	height: 0px;
+	width: 0px;
+	border-top: solid 8px #dcf8c6;
+	border-right: 8px solid transparent;
+	z-index: 1;
+}
+.to .message-element-tail {
+	height: 0px;
+	width: 0px;
+	border-top: solid 8px white;
+	border-left: 8px solid transparent;
+	z-index: 1;
 }
 .chats > .from {
+	flex-direction: row-reverse;
 	align-self: flex-end;
 }
 
@@ -45,9 +81,20 @@
 	align-self: flex-start;
 }
 
-.chats .chat-time {
+.message-content {
+	overflow-wrap: anywhere;
+}
+
+.message-time {
 	font-size: 0.7rem;
 	color: grey;
+	margin-top: 2px;
+}
+.to .message-time {
+	align-self: flex-start;
+}
+.from .message-time {
+	align-self: flex-end;
 }
 
 #hidden-chat {

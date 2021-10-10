@@ -1,11 +1,11 @@
 .contact-component {
 	display: flex;
-	background-color: blanchedalmond;
-	padding: 10px 0;
-	margin: 5px 0;
 	cursor: pointer;
+	background-color: var(--chat-head-back);
+	border-bottom: solid 0.5px var(--border-color);
+	cursor: pointer;
+	padding: 10px;
 }
-
 .contact-component > div {
 	display: flex;
 	flex-direction: column;

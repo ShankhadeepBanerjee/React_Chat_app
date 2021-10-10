@@ -1,13 +1,13 @@
 .sc1-nav {
-	height: 10vh;
-	background: rgb(226, 223, 223);
-	padding: 10px;
+	background: var(--nav-back);
 	display: flex;
 	align-items: center;
+	padding: 0 10px;
+	border-bottom: solid 1.5px var(--border-color);
 }
 
 .nav-user {
-	flex: 23;
+	flex: 1.75;
 	display: flex;
 	align-items: center;
 }
@@ -17,5 +17,7 @@
 	justify-content: space-around;
 }
 .nav-options > * {
-	cursor: pointer;
+	z-index: 0;
+	color: var(--icon-colors);
+	margin: 0 5px;
 }

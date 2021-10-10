@@ -1,12 +1,14 @@
 .screen2 {
-	width: 60%;
+	flex: 0.65;
 	height: inherit;
-	background: #d3e0d9;
+	display: grid;
+	grid-template-rows: 12vh 88vh;
+	background-color: var(--nav-back);
 }
 
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 450px) {
 	.screen2 {
-		width: 100%;
+		flex: 1;
 		position: absolute;
 		top: 0;
 		z-index: 0;

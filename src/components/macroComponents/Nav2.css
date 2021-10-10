@@ -1,9 +1,10 @@
 .sc2-nav {
-	height: 10vh;
-	background: black;
+	background: var(--nav-back);
 	display: flex;
 	align-items: center;
-	color: rgb(242, 243, 242);
+	padding: 0 10px;
+	z-index: 1;
+	border-bottom: solid 1.5px var(--border-color);
 }
 
 .sc2-nav > :nth-child(1) {
@@ -21,4 +22,9 @@
 	color: white;
 	width: 20px;
 	height: 20px;
+}
+
+.nav2-options {
+	display: flex;
+	justify-content: space-around;
 }

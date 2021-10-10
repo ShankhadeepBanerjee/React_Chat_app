@@ -1,15 +1,17 @@
 .screen1 {
-	width: 40%;
+	flex: 0.35;
 	height: inherit;
 	position: relative;
-	background-color: rgb(188, 154, 212);
 	overflow-y: auto;
 	overflow-x: hidden;
+	border-right: solid 1px var(--border-color);
+	display: grid;
+	grid-template-rows: 12vh 88vh;
 }
 
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 450px) {
 	.screen1 {
-		width: 100%;
+		flex: 1;
 		height: 100vh;
 		z-index: 1;
 	}

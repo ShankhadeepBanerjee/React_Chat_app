@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Avatar, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 // css
 import "./Nav2.css";
@@ -21,7 +22,7 @@ export default function Nav2() {
 				{conversation.partner !== null && (
 					<IconButton
 						onClick={hideScreen2}
-						style={{ color: "white", fontSize: "x-large" }}
+						style={{ fontSize: "x-large" }}
 					>
 						<ArrowBackIcon />
 					</IconButton>
@@ -36,7 +37,10 @@ export default function Nav2() {
 					</>
 				)}
 			</div>
-			<div>
+			<div className="nav2-options">
+				<IconButton>
+					<SearchOutlinedIcon />
+				</IconButton>
 				<IconButton>
 					<MoreVertIcon />
 				</IconButton>

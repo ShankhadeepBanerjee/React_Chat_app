@@ -28,12 +28,20 @@ export default function Chats() {
 					return (
 						<div
 							key={idx}
-							className={chat.from === user.email ? "from" : "to"}
+							className={
+								"message-element " +
+								(chat.from === user.email ? "from" : "to")
+							}
 						>
-							<p>{chat.content}</p>
-							<p className="chat-time">
-								<i>{chat.time}</i>
-							</p>
+							<span className="message-element-tail"></span>
+							<div className="main-body">
+								<p className="message-content">
+									{chat.content}
+								</p>
+								<p className="message-time">
+									<i>{chat.time}</i>
+								</p>
+							</div>
 						</div>
 					);
 				})}

@@ -3,39 +3,4 @@
 	flex-direction: column;
 	justify-content: space-between;
 	position: relative;
-	height: 90vh;
-}
-
-.chat-input {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: black;
-	padding: 3px 0;
-}
-.chat-input > form {
-	width: 100%;
-}
-
-.chat-input-box {
-	width: 100%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-}
-
-.chat-input .attachment {
-	color: white;
-}
-
-.chat-input .emoji {
-	color: white;
-}
-.chat-input input {
-	flex: 5;
-	height: 0vh;
-}
-.chat-input button {
-	flex: 1;
 }

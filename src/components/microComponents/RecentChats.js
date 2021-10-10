@@ -13,11 +13,7 @@ export default function RecentChats() {
 				Object.values(conversation.recentChats)
 					.sort((a, b) => b.timeStamp - a.timeStamp)
 					.map((chat, idx) => {
-						return (
-							<div key={idx}>
-								<ChatHead message={chat} />
-							</div>
-						);
+						return <ChatHead key={idx} message={chat} />;
 					})}
 		</div>
 	);

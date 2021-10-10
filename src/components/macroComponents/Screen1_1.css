@@ -1,10 +1,44 @@
 .screen1_1 {
 	width: 100%;
 	height: 100vh;
-	border: solid 1px black;
 	z-index: 1;
-	transition: width linear 200ms;
+	transition: transform linear 200ms;
 	position: absolute;
+	background-color: white;
+	cursor: pointer;
 	overflow: hidden;
-	background-color: rgb(128, 158, 202);
+}
+
+.header {
+	height: 20vh;
+	background-color: #00bfa5;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-around;
+	padding: 0 20px;
+}
+.header > div {
+	height: 10vh;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+.header > div > div:nth-child(1) {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+.header > div > div:nth-child(2) {
+	flex: 5;
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.screen1_1 .body {
+	height: 80vh;
+	overflow: scroll;
 }

@@ -2,10 +2,24 @@
 	display: grid;
 	grid-template-columns: 1fr 5fr;
 	grid-auto-rows: minmax(20px, 50px);
-	background-color: white;
-	border-bottom: solid 0.5px rgba(202, 200, 200, 0.692);
+	align-content: center;
+	background-color: var(--chat-head-back);
+	border-bottom: solid 0.5px var(--border-color);
 	cursor: pointer;
 	padding: 0 10px;
+	height: 13vh;
+	font-size: 1.1rem;
+}
+
+.chat-head:hover {
+	background-color: var(--chat-head-hover);
+}
+
+.active-chat {
+	background-color: var(--active-chat-back);
+}
+.active-chat:hover {
+	background-color: var(--active-chat-back);
 }
 
 .chat-head > :nth-child(1) {
@@ -18,4 +32,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
