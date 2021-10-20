@@ -10,7 +10,7 @@ export default function SetUpProfile() {
 	return (
 		<div className="setup-profile">
 			<div className="profile-pic">
-				<img src={user.pic} alt="" />
+				<img src={user.photoURL} alt="" />
 			</div>
 			<div className="profile-div">
 				<h4>Your Name</h4>

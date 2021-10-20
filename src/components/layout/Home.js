@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { db } from "../../firebaseConfig";
 import "./Home.css";
 import launchImg from "./launch.svg";
 
@@ -8,16 +6,11 @@ import {
 	firebaseSignOut,
 } from "../../tools/FirebaseAuthentication";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 
-export default function Home() {
+export default function Home({ lockSetter }) {
 	const user = useSelector(selectUser);
-	const dispatch = useDispatch();
-
-	function handleChange(e) {
-		setPhoneNumber(e.target.value);
-	}
 
 	return (
 		<div className="home">
@@ -26,21 +19,57 @@ export default function Home() {
 			</div>
 			<div className="home__right">
 				<div className="logIn__container">
-					<h1>Welcome</h1>
-					<div className="log_in_btn" onClick={signInWithGoogle}>Log In</div>
+					<h1
+						style={{
+							textAlign: "center",
+							margin: "10px 0",
+						}}
+					>
+						Welcome
+					</h1>
+					{user.signedIn ? (
+						<div className="already-logged-in">
+							<h3
+								style={{
+									textAlign: "center",
+									margin: "10px 0",
+								}}
+							>
+								Username: {user.name}
+							</h3>
+							<h3
+								style={{
+									textAlign: "center",
+									margin: "10px 0",
+								}}
+							>
+								Email: {user.email}
+							</h3>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "space-between",
+								}}
+							>
+								<div
+									className="btn"
+									onClick={() => lockSetter(true)}
+								>
+									Enter
+								</div>
+								<div className="btn" onClick={firebaseSignOut}>
+									{" "}
+									Log Out
+								</div>
+							</div>
+						</div>
+					) : (
+						<div className="log_in_btn" onClick={signInWithGoogle}>
+							Log In
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
 	);
 }
-
-
-{/* <button onClick={signInWithGoogle}>Sign In</button>
-			<button onClick={firebaseSignOut}>SignOut</button>
-			<button
-				onClick={() => {
-					console.log(user.name);
-				}}
-			>
-				Get User
-			</button> */}

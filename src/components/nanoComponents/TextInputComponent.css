@@ -1,0 +1,11 @@
+.chat-input-field {
+	flex: 1;
+	border: none;
+	width: 100%;
+	border-radius: 20px;
+	background: white;
+	border: none;
+	padding: 0 10px;
+	height: 35px;
+	font-size: 0.8rem;
+}

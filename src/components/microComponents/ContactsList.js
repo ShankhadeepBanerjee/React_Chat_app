@@ -9,7 +9,6 @@ export default function ContactsList() {
 	return (
 		<div>
 			<AddContact />
-
 			<div>
 				{Object.keys(contacts.contactList).map((contact, idx) => {
 					return (

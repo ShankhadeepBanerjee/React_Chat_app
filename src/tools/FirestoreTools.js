@@ -11,7 +11,7 @@ async function createUserIfNotExistsInDb(currentUser) {
 	const { displayName, photoURL, email } = currentUser;
 	const exists = await userExists(email);
 	if (exists) return;
-	console.log("Creating User in Firestore");
+	console.log("Creating User in Firestore", currentUser);
 	let UsersDocRef = doc(db, "Users", email);
 	await setDoc(UsersDocRef, {
 		displayName,
@@ -21,6 +21,7 @@ async function createUserIfNotExistsInDb(currentUser) {
 		messageQueue: [],
 		RecentChats: {},
 	});
+	console.log("User Created");
 }
 
 async function userExists(userEmail) {
@@ -46,7 +47,6 @@ async function createChatDocOfSenderAndReceiverIfNotExist(Sender, Receiver) {
 	return { exists: false };
 }
 async function addChatToSenderAndReceiverDb(Sender, Receiver, chat) {
-	// await createChatDocOfSenderAndReceiverIfNotExist(Sender, Receiver);
 	const batch = writeBatch(db);
 	console.log("adding Chat");
 	let docRefSender = doc(db, `Users/${Sender}/Chats`, Receiver);

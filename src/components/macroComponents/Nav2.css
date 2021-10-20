@@ -17,14 +17,21 @@
 	flex: 1;
 }
 
-.nav2-back-btn {
-	font-size: small;
-	color: white;
-	width: 20px;
-	height: 20px;
-}
-
 .nav2-options {
 	display: flex;
 	justify-content: space-around;
+}
+
+.icon {
+	font-size: x-large;
+}
+.back-btn {
+	display: none !important;
+}
+
+@media screen and (max-width: 520px) {
+	.back-btn {
+		display: inline-flex !important;
+		background-color: rebeccapurple;
+	}
 }

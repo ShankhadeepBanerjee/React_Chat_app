@@ -1,6 +1,8 @@
 .chat-input {
 	background-color: var(--nav-back);
 	padding: 3px 0;
+	/* position: relative; */
+	display: flex;
 }
 .chat-input > form {
 	width: 100%;
@@ -41,4 +43,92 @@
 .chat-input input:focus {
 	outline: 0;
 	border: none;
+}
+
+/* This part is for icons and attachments  */
+.icon {
+	font-size: var(--icon-size);
+}
+
+/* This part is inside attachment icon  */
+.attachment-icon-container {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+.attchment-icons {
+	height: 100%;
+	opacity: 0;
+	position: absolute;
+	transition: transform cubic-bezier(0.1, 0.47, 0.01, 1.15) 200ms,
+		opacity linear 200ms;
+	transform: translateY(0%) scale(0);
+	cursor: pointer;
+}
+.attchment-icons img {
+	height: inherit;
+}
+
+.icon0 {
+	z-index: 1;
+	opacity: 1;
+	transform: scale(1);
+}
+
+.show-icon {
+	opacity: 1;
+	border-radius: 50%;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.466);
+}
+.icon-one {
+	transform: translateY(-125%) scale(1);
+}
+.icon-two {
+	transform: translateY(calc(-220% - 5px)) scale(1);
+}
+.icon-three {
+	transform: translateY(calc(-320% - 10px)) scale(1);
+}
+
+.file-input-elements {
+	display: none;
+}
+
+/* This is for upload file section  */
+.upload-page {
+	height: 100%;
+	width: 100%;
+	background-color: var(--attchment-upload-back);
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	animation: upload-page-animation linear 300ms;
+}
+.cross {
+	font-size: x-large;
+	font-weight: bolder;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.embeded-preview body {
+	display: flex;
+	justify-content: center;
+}
+.embeded-preview img {
+	height: inherit;
+}
+
+@keyframes upload-page-animation {
+	0% {
+		top: 100%;
+	}
+	100% {
+		top: 0;
+	}
 }

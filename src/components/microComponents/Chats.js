@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectConversation } from "../../features/conversationSlice";
 import { selectUser } from "../../features/userSlice";
+
+import parse from "html-react-parser";
 
 // css
 import "./Chats.css";
@@ -10,6 +12,7 @@ export default function Chats() {
 	const user = useSelector(selectUser);
 	const conversation = useSelector(selectConversation);
 	const partner = conversation.partner;
+	// const messagesToShow = conversation.chats[partner.email];
 
 	const InvisibleDiv = () => {
 		const divRef = useRef(null);
@@ -21,7 +24,10 @@ export default function Chats() {
 		return <div id="hidden-chat" ref={divRef}></div>;
 	};
 
+	console.log("Rendering Chats ");
 	const Messages = (props) => {
+		console.log("Rendering messages ");
+
 		return (
 			<>
 				{props.messages.map((chat, idx) => {
@@ -35,9 +41,10 @@ export default function Chats() {
 						>
 							<span className="message-element-tail"></span>
 							<div className="main-body">
-								<p className="message-content">
-									{chat.content}
-								</p>
+								{parse(
+									chat.content.mediaContent +
+										chat.content.chatContent
+								)}
 								<p className="message-time">
 									<i>{chat.time}</i>
 								</p>
@@ -51,13 +58,7 @@ export default function Chats() {
 	};
 
 	return (
-		<div
-			className="chats"
-			onLoad={(e) => {
-				e.stopPropagation();
-				e.preventDefault();
-			}}
-		>
+		<div className="chats">
 			{partner && [partner.email] in conversation.chats && (
 				<Messages messages={conversation.chats[partner.email]} />
 			)}

@@ -7,6 +7,7 @@ const conversationSlice = createSlice({
 		partner: null,
 		chats: {},
 		recentChats: {},
+		alreadyFetchedChats: {},
 	},
 	reducers: {
 		setPartner: (state, action) => {
@@ -15,7 +16,8 @@ const conversationSlice = createSlice({
 		setChatsFor: (state, action) => {
 			const to = action.payload.to;
 			const chatsArray = action.payload.chats;
-			state.chats[to] = chatsArray;
+			if (!([to] in state.chats)) state.chats[to] = chatsArray;
+			else state.chats[to] = [...state.chats[to], ...chatsArray];
 		},
 		addChat: (state, action) => {
 			let message = action.payload;
@@ -41,10 +43,15 @@ const conversationSlice = createSlice({
 			const recentChatsFromDb = action.payload;
 			state.recentChats = recentChatsFromDb;
 		},
+
+		addToAlreadyFetched: (state, action) => {
+			state.alreadyFetchedChats[action.payload] = true;
+		},
 		resetConversation: (state) => {
 			state.partner = null;
 			state.chats = {};
 			state.recentChats = {};
+			state.alreadyFetchedChats = {};
 		},
 	},
 });
@@ -54,6 +61,7 @@ export const {
 	addChat,
 	setChatsFor,
 	setRecentChats,
+	addToAlreadyFetched,
 	resetConversation,
 } = conversationSlice.actions;
 export const selectConversation = (state) => state.conversation;

@@ -6,6 +6,9 @@ import { getChatsForAPersoneAndShowOnChatsScreen } from "../../tools/AppSpecific
 
 // Material UI
 import { Avatar } from "@mui/material";
+import ImageIcon from "@mui/icons-material/Image";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import DescriptionIcon from "@mui/icons-material/Description";
 
 // css
 import "./ChatHead.css";
@@ -17,11 +20,40 @@ export default function ChatHead(props) {
 	const contacts = useSelector(selectContacts);
 	const message = props.message;
 
+	const chatPreview = ({ mediaContentType, chatContent }) => {
+		let mediaTypeIcon;
+		switch (mediaContentType) {
+			case "image":
+				mediaTypeIcon = <ImageIcon />;
+				break;
+
+			case "video":
+				mediaTypeIcon = <VideocamIcon />;
+				break;
+			default:
+				mediaTypeIcon = "";
+				break;
+		}
+		return (
+			<div style={{ display: "flex", alignItems: "center" }}>
+				{mediaTypeIcon}
+				{chatContent ? chatContent : mediaContentType}
+			</div>
+		);
+	};
+
 	// if message is send by the user then it would be "message.to" else "message.from"
-	const contactOfTheChat =
+	const sender =
 		auth.currentUser && message.to == auth.currentUser.email
-			? contacts.contactList[message.from]
-			: contacts.contactList[message.to];
+			? message.from
+			: message.to;
+
+	let contactOfTheChat;
+
+	// This checks whether the sender is in users contacts or is it a n unknown person
+	if (sender in contacts.contactList)
+		contactOfTheChat = contacts.contactList[sender];
+	else contactOfTheChat = { email: sender, name: sender, pic: "" };
 
 	function handleClick() {
 		getChatsForAPersoneAndShowOnChatsScreen(
@@ -51,9 +83,7 @@ export default function ChatHead(props) {
 
 					<div>
 						<p>{contactOfTheChat.name}</p>
-						<p>
-							<b>{message.content}</b>
-						</p>
+						{chatPreview(message.content)}
 					</div>
 				</>
 			)}

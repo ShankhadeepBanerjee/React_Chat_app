@@ -1,0 +1,12 @@
+.file-upload-preview {
+	height: fit-content;
+	width: fit-content;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.file-upload-preview > * {
+	max-height: 300px;
+	max-width: 200px;
+	box-shadow: -2px 3px 10px grey;
+}

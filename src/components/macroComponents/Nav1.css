@@ -18,6 +18,9 @@
 }
 .nav-options > * {
 	z-index: 0;
+	margin: 0 10px;
+}
+.nav-options svg {
 	color: var(--icon-colors);
-	margin: 0 5px;
+	font-size: var(--icon-size);
 }

@@ -20,10 +20,7 @@ export default function Nav2() {
 		<div className="sc2-nav">
 			<div>
 				{conversation.partner !== null && (
-					<IconButton
-						onClick={hideScreen2}
-						style={{ fontSize: "x-large" }}
-					>
+					<IconButton onClick={hideScreen2} className="icon back-btn">
 						<ArrowBackIcon />
 					</IconButton>
 				)}
@@ -31,17 +28,25 @@ export default function Nav2() {
 				{conversation.partner !== null && (
 					<>
 						<Avatar src={conversation.partner.pic} />
-						<p style={{ margin: "0 10px" }}>
+						<p
+							style={{
+								margin: "0 10px",
+								width: "150px",
+								whiteSpace: "nowrap",
+								overflow: "hidden",
+								textOverflow: "ellipsis",
+							}}
+						>
 							{conversation.partner.name}
 						</p>
 					</>
 				)}
 			</div>
 			<div className="nav2-options">
-				<IconButton>
+				<IconButton className="icon">
 					<SearchOutlinedIcon />
 				</IconButton>
-				<IconButton>
+				<IconButton className="icon">
 					<MoreVertIcon />
 				</IconButton>
 			</div>

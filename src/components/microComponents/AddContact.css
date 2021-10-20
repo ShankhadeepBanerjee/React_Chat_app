@@ -1,0 +1,60 @@
+.add-contact {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: solid 0.5px var(--border-color);
+	cursor: pointer;
+	padding: 10px;
+}
+
+.add-contact-form {
+	width: 100%;
+	animation: addContactFormAnimation 200ms linear;
+	display: flex;
+	flex-direction: column;
+}
+.add-contact-form > * {
+	margin: 5px 0;
+	display: flex;
+	justify-content: space-between;
+}
+.add-contact-form input {
+	height: 25px;
+	width: 100%;
+	border: none;
+	border-bottom: solid 0.5px rgb(134, 133, 133);
+}
+.add-contact-form input:focus {
+	outline: none;
+	border-bottom: solid 1.5px rgb(0, 0, 0);
+}
+.add-contact-form > :nth-child(3) {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.add-contact-button {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	animation: addContactButtonAnimation 200ms linear;
+}
+
+@keyframes addContactFormAnimation {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes addContactButtonAnimation {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
+}

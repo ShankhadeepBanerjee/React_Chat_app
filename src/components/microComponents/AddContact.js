@@ -1,9 +1,18 @@
+// React essentials
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-// states
+// tools
 import { addContact } from "../../features/contactsSlice";
 import { addContactToDb } from "../../tools/FirestoreTools";
+
+// MaterialUi
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { Button } from "@mui/material";
+
+// css
+import "./AddContact.css";
+import { IconButton } from "@mui/material";
 
 export function AddContact() {
 	const dispatch = useDispatch();
@@ -37,45 +46,70 @@ export function AddContact() {
 		setNewContact({ name: "", email: "", pic: "" });
 	}
 
-	return (
-		<div>
-			<div>
-				{contactFormOpen == false ? (
-					<button onClick={() => setContactFormOpen(true)}>
-						Add New Contact
-					</button>
-				) : (
-					<form
-						action=""
-						onSubmit={(e) => {
-							e.preventDefault();
-							addNewContact(newContact);
-							setContactFormOpen(false);
-						}}
-					>
-						<div>
-							<label htmlFor="name">name</label>
-							<input
-								type="text"
-								name="name"
-								value={newContact.name}
-								onChange={handleContactFormChange}
-							/>
-						</div>
-						<div>
-							<label htmlFor="email">email</label>
-							<input
-								type="email"
-								name="email"
-								value={newContact.email}
-								onChange={handleContactFormChange}
-							/>
-						</div>
+	function formClose() {
+		console.log("Yes");
+		setContactFormOpen(false);
+		setNewContact({ name: "", email: "", pic: "" });
+	}
 
-						<button>ADD</button>
-					</form>
-				)}
-			</div>
+	function handleSubmit() {
+		addNewContact(newContact);
+		setContactFormOpen(false);
+	}
+
+	return (
+		<div className="add-contact">
+			{contactFormOpen == false ? (
+				<div
+					className="add-contact-button"
+					onClick={() => setContactFormOpen(true)}
+				>
+					<IconButton color="primary">
+						<AccountCircleRoundedIcon fontSize="large" />
+					</IconButton>
+					<p>New Contact</p>
+				</div>
+			) : (
+				<form
+					action=""
+					onSubmit={(e) => e.preventDefault()}
+					className="add-contact-form"
+				>
+					<label htmlFor="name">Name: </label>
+					<input
+						type="text"
+						name="name"
+						value={newContact.name}
+						onChange={handleContactFormChange}
+					/>
+					<label htmlFor="email">Email: </label>
+					<input
+						type="email"
+						name="email"
+						value={newContact.email}
+						onChange={handleContactFormChange}
+					/>
+
+					<div>
+						<Button
+							variant="contained"
+							color="primary"
+							size="small"
+							onClick={handleSubmit}
+						>
+							Add
+						</Button>
+						<Button
+							variant="outlined"
+							color="error"
+							size="small"
+							onClick={formClose}
+						>
+							Cancel
+						</Button>
+					</div>
+				</form>
+			)}
 		</div>
 	);
 }

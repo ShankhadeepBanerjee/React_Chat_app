@@ -32,45 +32,47 @@
 	flex-direction: column;
 	overflow-y: auto;
 	overflow-x: hidden;
-	background-image: url("../../Assets/whatsapp-chat-background-pattern.png");
-	background-size: cover;
 }
 .message-element {
 	display: flex;
 	margin: 5px 5px;
+	max-width: 80%;
+	min-width: 200px;
 }
 .message-element > .main-body {
 	padding: 10px;
-	background-color: white;
-	width: fit-content;
-	max-width: 80%;
+	width: min(65%, 400px);
 	border-radius: 10px;
-	box-shadow: 0 1px 2px grey;
 	display: flex;
 	flex-direction: column;
+	overflow-wrap: break-word;
+}
+.message-element > .main-body > * {
+	max-width: 100%;
 }
 
 .from .main-body {
 	border-top-right-radius: 0;
 	background-color: #dcf8c6;
+	box-shadow: -1px 1px 2px grey;
 }
 
 .to .main-body {
 	border-top-left-radius: 0;
+	background-color: #fdfdfd;
+	box-shadow: 1px 1px 2px grey;
 }
 .from .message-element-tail {
 	height: 0px;
 	width: 0px;
 	border-top: solid 8px #dcf8c6;
 	border-right: 8px solid transparent;
-	z-index: 1;
 }
 .to .message-element-tail {
 	height: 0px;
 	width: 0px;
 	border-top: solid 8px white;
 	border-left: 8px solid transparent;
-	z-index: 1;
 }
 .chats > .from {
 	flex-direction: row-reverse;
