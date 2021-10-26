@@ -1,14 +1,8 @@
-import "./App.css";
-import Home from "../components/layout/Home";
-import Screen1 from "../components/layout/Screen1";
-import Screen2 from "../components/layout/Screen2";
+import { useEffect, useState } from "react";
+
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, signInUser, signOutUser } from "../features/userSlice";
-import { createUserIfNotExistsInDb, userExists } from "../tools/FirestoreTools";
-import { doc, onSnapshot, updateDoc } from "@firebase/firestore";
-import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "@firebase/auth";
-import { auth, db } from "../firebaseConfig";
 import { populateContacts, resetContact } from "../features/contactsSlice";
 import {
 	addChat,
@@ -16,14 +10,29 @@ import {
 	setRecentChats,
 } from "../features/conversationSlice";
 
-export default function App() {
-	const [userExistsInDb, setUserExistsInDb] = useState(false);
-	const [unLock, setUnLock] = useState(false);
+// Tools
+import { createUserIfNotExistsInDb, userExists } from "../tools/FirestoreTools";
+import { doc, onSnapshot, updateDoc } from "@firebase/firestore";
 
-	// All the useEffects and Listeners are here
+import { onAuthStateChanged } from "@firebase/auth";
+import { auth, db } from "../firebaseConfig";
+
+// Components
+import Home from "../components/layout/Home";
+import Screen1 from "../components/layout/Screen1";
+import Screen2 from "../components/layout/Screen2";
+
+// CSS
+import "./App.css";
+
+export default function App() {
+	// This locks the "<Home/>" page and prompts user to choose options
+	const [unLock, setUnLock] = useState(false);
 
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
+
+	// All the useEffects and Listeners are here
 
 	// This is for Auth State Change Listener
 	useEffect(() => {

@@ -5,6 +5,10 @@ import { selectUser } from "../../features/userSlice";
 
 import parse from "html-react-parser";
 
+// Material UI
+import LinearProgress from "@mui/material/LinearProgress";
+import CircularProgress from "@mui/material/CircularProgress";
+
 // css
 import "./Chats.css";
 

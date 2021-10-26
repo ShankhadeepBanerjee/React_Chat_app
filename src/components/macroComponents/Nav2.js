@@ -20,7 +20,11 @@ export default function Nav2() {
 		<div className="sc2-nav">
 			<div>
 				{conversation.partner !== null && (
-					<IconButton onClick={hideScreen2} className="icon back-btn">
+					<IconButton
+						onClick={hideScreen2}
+						className="icon"
+						id="back-btn"
+					>
 						<ArrowBackIcon />
 					</IconButton>
 				)}

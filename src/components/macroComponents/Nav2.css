@@ -25,13 +25,12 @@
 .icon {
 	font-size: x-large;
 }
-.back-btn {
-	display: none !important;
+#back-btn {
+	display: none;
 }
 
 @media screen and (max-width: 520px) {
-	.back-btn {
-		display: inline-flex !important;
-		background-color: rebeccapurple;
+	#back-btn {
+		display: inline-flex;
 	}
 }

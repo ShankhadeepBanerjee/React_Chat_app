@@ -6,14 +6,49 @@ import {
 	firebaseSignOut,
 } from "../../tools/FirebaseAuthentication";
 
+import GoogleIcon from "@mui/icons-material/Google";
+
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
+
+const LogedInUserProfile = ({ user, lockSetter }) => {
+	return (
+		<div className="logged-in-user">
+			<div>
+				<div className="user-image-div">
+					<img src={user.photoURL} alt="" />
+				</div>
+				<div className="user-description-div">
+					<span>{user.name}</span>
+					<span style={{ fontSize: "small", color: "grey" }}>
+						<em>{user.email}</em>
+					</span>
+				</div>
+			</div>
+
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "space-between",
+				}}
+			>
+				<div className="btn" onClick={() => lockSetter(true)}>
+					Enter
+				</div>
+				<div className="btn" onClick={firebaseSignOut}>
+					Log Out
+				</div>
+			</div>
+		</div>
+	);
+};
 
 export default function Home({ lockSetter }) {
 	const user = useSelector(selectUser);
 
 	return (
 		<div className="home">
+			<div className="home-background-blob-object"></div>
 			<div className="home__left">
 				<img src={launchImg} alt="" />
 			</div>
@@ -28,44 +63,16 @@ export default function Home({ lockSetter }) {
 						Welcome
 					</h1>
 					{user.signedIn ? (
-						<div className="already-logged-in">
-							<h3
-								style={{
-									textAlign: "center",
-									margin: "10px 0",
-								}}
-							>
-								Username: {user.name}
-							</h3>
-							<h3
-								style={{
-									textAlign: "center",
-									margin: "10px 0",
-								}}
-							>
-								Email: {user.email}
-							</h3>
-							<div
-								style={{
-									display: "flex",
-									justifyContent: "space-between",
-								}}
-							>
-								<div
-									className="btn"
-									onClick={() => lockSetter(true)}
-								>
-									Enter
-								</div>
-								<div className="btn" onClick={firebaseSignOut}>
-									{" "}
-									Log Out
-								</div>
-							</div>
-						</div>
+						<LogedInUserProfile
+							user={user}
+							lockSetter={lockSetter}
+						/>
 					) : (
 						<div className="log_in_btn" onClick={signInWithGoogle}>
-							Log In
+							<GoogleIcon />
+							<span style={{ margin: "0 10px" }}>
+								Sign In With Google
+							</span>
 						</div>
 					)}
 				</div>

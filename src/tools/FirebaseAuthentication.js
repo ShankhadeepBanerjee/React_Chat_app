@@ -20,4 +20,9 @@ function firebaseSignOut() {
 		.catch((error) => {});
 }
 
+// async function setUserStatusOnline(user) {
+// 	let docRef1 = doc(db, `Status/`, user.email);
+// 	await setDoc(docRef1, { status: "online"});
+// }
+
 export { signInWithGoogle, firebaseSignOut };

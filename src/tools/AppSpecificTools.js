@@ -58,7 +58,9 @@ function makeChatContent(chatInput, mediaURL, mediaFileExtension) {
 				contentObject["mediaContentType"] = "video";
 				break;
 			case "jpg":
-				contentObject["mediaContent"] = `<img src="${mediaURL}" />`;
+				contentObject[
+					"mediaContent"
+				] = `<img src="${mediaURL}" loading="lazy" />`;
 				contentObject["mediaContentType"] = "image";
 				break;
 			case "png":
