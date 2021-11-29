@@ -12,6 +12,10 @@ build
 dist
 public/dist
 
+
+# Parcel cache
+.parcel-cache
+
 # Firebase cache
 .firebase/
 
