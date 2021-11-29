@@ -8,13 +8,25 @@ import { addContactToDb } from "../../tools/FirestoreTools";
 
 // MaterialUi
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
 // css
 import "./AddContact.css";
 import { IconButton } from "@mui/material";
 
+const useStyles = makeStyles({
+	field: {
+		margin: "5px 0",
+	},
+});
+
 export function AddContact() {
+	const classes = useStyles();
+
 	const dispatch = useDispatch();
 	const [contactFormOpen, setContactFormOpen] = useState(false);
 	const [newContact, setNewContact] = useState({
@@ -75,38 +87,35 @@ export function AddContact() {
 					onSubmit={(e) => e.preventDefault()}
 					className="add-contact-form"
 				>
-					<label htmlFor="name">Name: </label>
-					<input
+					<TextField
 						type="text"
+						label="Name"
+						className={classes.field}
 						name="name"
 						value={newContact.name}
 						onChange={handleContactFormChange}
 					/>
-					<label htmlFor="email">Email: </label>
-					<input
+
+					<TextField
 						type="email"
+						label="email"
 						name="email"
+						className={classes.field}
 						value={newContact.email}
 						onChange={handleContactFormChange}
 					/>
 
 					<div>
-						<Button
-							variant="contained"
-							color="primary"
-							size="small"
-							onClick={handleSubmit}
-						>
-							Add
-						</Button>
-						<Button
-							variant="outlined"
-							color="error"
-							size="small"
-							onClick={formClose}
-						>
-							Cancel
-						</Button>
+						<Tooltip title="Cancel">
+							<IconButton color="error" onClick={formClose}>
+								<CancelRoundedIcon fontSize="large" />
+							</IconButton>
+						</Tooltip>
+						<Tooltip title="Add">
+							<IconButton color="success" onClick={handleSubmit}>
+								<AddCircleRoundedIcon fontSize="large" />
+							</IconButton>
+						</Tooltip>
 					</div>
 				</form>
 			)}

@@ -8,11 +8,11 @@ import { getChatsForAPersoneAndShowOnChatsScreen } from "../../tools/AppSpecific
 import { Avatar } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import VideocamIcon from "@mui/icons-material/Videocam";
-import DescriptionIcon from "@mui/icons-material/Description";
 
 // css
 import "./ChatHead.css";
 import { auth } from "../../firebaseConfig";
+import { setUnreadMessageCountToZeroInDB } from "../../tools/FirestoreTools";
 
 export default function ChatHead(props) {
 	const conversation = useSelector(selectConversation);
@@ -56,6 +56,12 @@ export default function ChatHead(props) {
 	else contactOfTheChat = { email: sender, name: sender, pic: "" };
 
 	function handleClick() {
+		if (
+			conversation.unreadMessages[contactOfTheChat.email] &&
+			conversation.unreadMessages[contactOfTheChat.email] !== 0
+		) {
+			setUnreadMessageCountToZeroInDB(contactOfTheChat);
+		}
 		getChatsForAPersoneAndShowOnChatsScreen(
 			contactOfTheChat,
 			conversation,
@@ -83,10 +89,27 @@ export default function ChatHead(props) {
 
 					<div>
 						<p>{contactOfTheChat.name}</p>
-						{chatPreview(message.content)}
+						<div className="chat-prev">
+							{chatPreview(message.content)}
+							<UnreadMessages
+								contactOfTheChat={contactOfTheChat}
+							/>
+						</div>
 					</div>
 				</>
 			)}
 		</div>
 	);
 }
+
+const UnreadMessages = ({ contactOfTheChat }) => {
+	const conversation = useSelector(selectConversation);
+	return (
+		<span className="unread-messages">
+			{conversation.unreadMessages[contactOfTheChat.email] &&
+				conversation.unreadMessages[contactOfTheChat.email] > 0 && (
+					<p>{conversation.unreadMessages[contactOfTheChat.email]}</p>
+				)}
+		</span>
+	);
+};

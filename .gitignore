@@ -9,6 +9,8 @@ firebase-debug.*.log*
 
 # dont track the build
 build
+dist
+public/dist
 
 # Firebase cache
 .firebase/

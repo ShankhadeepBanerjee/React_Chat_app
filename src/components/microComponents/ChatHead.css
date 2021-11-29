@@ -36,3 +36,29 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.chat-prev {
+	display: flex;
+	justify-content: space-between;
+}
+
+.unread-messages {
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: x-small;
+	color: white;
+	font-weight: 700;
+}
+
+.unread-messages p {
+	width: 3vh;
+	height: 3vh;
+	border-radius: 50%;
+	text-align: center;
+	background-color: #06d755;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

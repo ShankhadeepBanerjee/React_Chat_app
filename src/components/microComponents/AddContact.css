@@ -4,26 +4,24 @@
 	cursor: pointer;
 	border-bottom: solid 0.5px var(--border-color);
 	cursor: pointer;
-	padding: 10px;
 }
 
 .add-contact-form {
 	width: 100%;
+	height: 80vh;
 	animation: addContactFormAnimation 200ms linear;
 	display: flex;
 	flex-direction: column;
+	background-color: var(--nav-back);
+	padding: 1%;
+	/* margin-bottom: 100%; */
 }
 .add-contact-form > * {
 	margin: 5px 0;
 	display: flex;
 	justify-content: space-between;
 }
-.add-contact-form input {
-	height: 25px;
-	width: 100%;
-	border: none;
-	border-bottom: solid 0.5px rgb(134, 133, 133);
-}
+
 .add-contact-form input:focus {
 	outline: none;
 	border-bottom: solid 1.5px rgb(0, 0, 0);
@@ -36,6 +34,7 @@
 
 .add-contact-button {
 	width: 100%;
+	padding: 1% 0;
 	display: flex;
 	align-items: center;
 	animation: addContactButtonAnimation 200ms linear;
@@ -52,9 +51,9 @@
 
 @keyframes addContactButtonAnimation {
 	0% {
-		transform: translateX(-100%);
+		transform: scaleY(0);
 	}
 	100% {
-		transform: translateX(0%);
+		transform: scaleY(1);
 	}
 }

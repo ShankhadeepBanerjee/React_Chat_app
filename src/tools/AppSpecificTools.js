@@ -42,7 +42,6 @@ function getFileExtension(file) {
 }
 
 function makeChatContent(chatInput, mediaURL, mediaFileExtension) {
-	console.log("Making Chat Content");
 	let contentObject = {
 		mediaContent: "",
 		mediaContentType: "",
@@ -67,6 +66,12 @@ function makeChatContent(chatInput, mediaURL, mediaFileExtension) {
 				contentObject["mediaContent"] = `<img src="${mediaURL}" />`;
 				contentObject["mediaContentType"] = "image";
 				break;
+			case "mp3":
+				contentObject["mediaContent"] = `<audio controls>
+				<source src="${mediaURL}" type="audio/mp3">
+				</audio>`;
+				contentObject["mediaContentType"] = "audio";
+				break;
 			default:
 				contentObject["mediaContent"] = `<embed src="${mediaURL}" />`;
 				contentObject["mediaContentType"] = "doc";
@@ -76,9 +81,59 @@ function makeChatContent(chatInput, mediaURL, mediaFileExtension) {
 	return contentObject;
 }
 
+function audioRecorder({ audioChunks, setAudioChunks }) {
+	this.mediaRecorder;
+	this.stream_;
+	let mediaRecorder;
+	let LastRecorded = [];
+
+	this.init = (strm) => {
+		this.stream_ = strm;
+
+		mediaRecorder = new MediaRecorder(this.stream_);
+
+		mediaRecorder.start();
+
+		mediaRecorder.ondataavailable = async (e) => {
+			await setAudioChunks([e.data]);
+			// audioChunks.push(e.data);
+		};
+
+		mediaRecorder.onstop = (e) => {};
+	};
+
+	this.startAudioRecording = () => {
+		navigator.mediaDevices
+			.getUserMedia({ audio: "true" })
+			.then((stream) => {
+				this.stream_ = stream;
+				this.init(stream);
+			});
+	};
+
+	this.stopAudioWithStream = (stream) => {
+		stream.getTracks().forEach(function (track) {
+			if (track.readyState == "live" && track.kind === "audio") {
+				track.stop();
+			}
+		});
+	};
+
+	this.stopAudioRecording = () => {
+		mediaRecorder.stop();
+		this.stopAudioWithStream(this.stream_);
+	};
+
+	this.getLastRecorded = () => {
+		mediaRecorder.requestData();
+		return LastRecorded;
+	};
+}
+
 export {
 	getChatsForAPersoneAndShowOnChatsScreen,
 	getFileExtension,
 	getFileSizeInMB,
 	makeChatContent,
+	audioRecorder,
 };

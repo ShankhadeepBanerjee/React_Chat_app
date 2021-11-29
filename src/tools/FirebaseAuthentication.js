@@ -1,3 +1,5 @@
+import { doc, setDoc } from "@firebase/firestore";
+import { db } from "../firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
@@ -14,15 +16,25 @@ function signInWithGoogle() {
 		});
 }
 
-function firebaseSignOut() {
-	signOut(auth)
-		.then(() => {})
-		.catch((error) => {});
+async function firebaseSignOut() {
+	await setUserStatusOffline(auth.currentUser);
+	signOut(auth);
 }
 
-// async function setUserStatusOnline(user) {
-// 	let docRef1 = doc(db, `Status/`, user.email);
-// 	await setDoc(docRef1, { status: "online"});
-// }
+async function setUserStatusOnline(user) {
+	let docRef1 = doc(db, `Status/`, user.email);
+	await setDoc(docRef1, { isOnline: true });
+}
 
-export { signInWithGoogle, firebaseSignOut };
+async function setUserStatusOffline(user) {
+	let docRef1 = doc(db, `Status/`, user.email);
+	await setDoc(docRef1, { isOnline: false });
+	console.log("Status set to false");
+}
+
+export {
+	signInWithGoogle,
+	firebaseSignOut,
+	setUserStatusOnline,
+	setUserStatusOffline,
+};

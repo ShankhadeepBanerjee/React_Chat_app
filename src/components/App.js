@@ -8,6 +8,7 @@ import {
 	addChat,
 	resetConversation,
 	setRecentChats,
+	setUnreadMessages,
 } from "../features/conversationSlice";
 
 // Tools
@@ -24,6 +25,10 @@ import Screen2 from "../components/layout/Screen2";
 
 // CSS
 import "./App.css";
+import {
+	setUserStatusOffline,
+	setUserStatusOnline,
+} from "../tools/FirebaseAuthentication";
 
 export default function App() {
 	// This locks the "<Home/>" page and prompts user to choose options
@@ -38,6 +43,7 @@ export default function App() {
 	useEffect(() => {
 		const func = onAuthStateChanged(auth, (currentUser) => {
 			if (currentUser) {
+				setUserStatusOnline(currentUser);
 				let { displayName, photoURL, email } = currentUser;
 
 				(async () => {
@@ -71,11 +77,11 @@ export default function App() {
 			console.log(`Listening to ${user.email}'s data`);
 			dispatch(setRecentChats(snapShot.data().RecentChats));
 			(async () => {
-				snapShot.data().messageQueue.length > 0 &&
-					snapShot.data().messageQueue.forEach((message) => {
-						console.log("Adding message", message);
-						dispatch(addChat(message));
-					});
+				if (snapShot.data().messageQueue.length <= 0) return;
+				snapShot.data().messageQueue.forEach((message) => {
+					console.log("Adding message", message);
+					dispatch(addChat(message));
+				});
 				await updateDoc(doc(db, "Users", user.email), {
 					messageQueue: [],
 				});

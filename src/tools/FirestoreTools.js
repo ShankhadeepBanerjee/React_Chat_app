@@ -20,6 +20,7 @@ async function createUserIfNotExistsInDb(currentUser) {
 		contacts: [],
 		messageQueue: [],
 		RecentChats: {},
+		unreadMessages: {},
 	});
 	console.log("User Created");
 }
@@ -111,6 +112,12 @@ async function addContactToDb(contact) {
 	}
 }
 
+function setUnreadMessageCountToZeroInDB(contact) {
+	const user = auth.currentUser;
+	const docRef = doc(db, "Users/", user.email);
+	setDoc(docRef, { unreadMessages: { [contact.email]: 0 } }, { merge: true });
+}
+
 export {
 	createUserIfNotExistsInDb,
 	userExists,
@@ -118,4 +125,5 @@ export {
 	addChatToSenderAndReceiverDb,
 	addContactToDb,
 	getChats,
+	setUnreadMessageCountToZeroInDB,
 };

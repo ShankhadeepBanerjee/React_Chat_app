@@ -1,5 +1,8 @@
-import { selectConversation } from "../../features/conversationSlice";
-import { useSelector } from "react-redux";
+import {
+	selectConversation,
+	setPartner,
+} from "../../features/conversationSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { Avatar, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -10,6 +13,7 @@ import "./Nav2.css";
 
 export default function Nav2() {
 	const conversation = useSelector(selectConversation);
+	const dispatch = useDispatch();
 
 	function hideScreen2() {
 		const elem = document.querySelector(".screen2");
@@ -21,7 +25,10 @@ export default function Nav2() {
 			<div>
 				{conversation.partner !== null && (
 					<IconButton
-						onClick={hideScreen2}
+						onClick={() => {
+							hideScreen2();
+							dispatch(setPartner(null));
+						}}
 						className="icon"
 						id="back-btn"
 					>
@@ -47,10 +54,10 @@ export default function Nav2() {
 				)}
 			</div>
 			<div className="nav2-options">
-				<IconButton className="icon">
+				<IconButton className="icon" disabled>
 					<SearchOutlinedIcon />
 				</IconButton>
-				<IconButton className="icon">
+				<IconButton className="icon" disabled>
 					<MoreVertIcon />
 				</IconButton>
 			</div>

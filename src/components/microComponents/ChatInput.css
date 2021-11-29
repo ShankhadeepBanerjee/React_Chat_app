@@ -1,8 +1,8 @@
 .chat-input {
 	background-color: var(--nav-back);
 	padding: 3px 0;
-	/* position: relative; */
 	display: flex;
+	flex-direction: column;
 }
 .chat-input > form {
 	width: 100%;

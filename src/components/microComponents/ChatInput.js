@@ -1,5 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 
+import Picker from "emoji-picker-react";
+
 // redux
 import { useSelector, useDispatch } from "react-redux";
 
@@ -8,6 +10,7 @@ import { auth } from "../../firebaseConfig";
 import { addChatToSenderAndReceiverDb } from "../../tools/FirestoreTools";
 import Compressor from "compressorjs";
 import {
+	audioRecorder,
 	getFileExtension,
 	getFileSizeInMB,
 	makeChatContent,
@@ -24,16 +27,16 @@ import cameraAttachment from "../../Assets/camera-attachment.svg";
 import Box from "@mui/material/Box";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import AttachmentIcon from "@mui/icons-material/Attachment";
-import MicOutlinedIcon from "@mui/icons-material/MicOutlined";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 // components
 import FileUploadPreview from "./FileUploadPreview";
+import VoiceRecordingComponent from "../nanoComponents/VoiceRecordingComponent";
+import TextInputComponent from "../nanoComponents/TextInputComponent";
 
 // css
 import "./ChatInput.css";
-import TextInputComponent from "../nanoComponents/TextInputComponent";
 
 export default function ChatInput() {
 	const user = auth.currentUser;
@@ -41,16 +44,26 @@ export default function ChatInput() {
 	const dispatch = useDispatch();
 	const partner = conversation.partner;
 
+	// states
 	const [chatInput, setChatInput] = useState("");
 	const [attachmentIconVisible, setAttachmentIconVisible] = useState(false);
 	const [showUploadPage, setShowUploadPage] = useState(false);
 	const [uploadFile, setUploadFile] = useState(null);
 
-	console.log("ChatInput is rendered");
+	// This is for emoji picker
+	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
+	const onEmojiClick = (event, emojiObject) => {
+		// setChosenEmoji(emojiObject);
+		console.log(emojiObject);
+		setChatInput((prev) => prev + emojiObject.emoji);
+	};
+
+	// This is for image attachment
 	const imageAttachmentRef = useRef(null);
 	const chatInputFormSubmitButtonRef = useRef(null);
 
+	// This compresses images
 	const compressImage = (imageFile, qualityIndex) => {
 		new Compressor(imageFile, {
 			quality: qualityIndex, // 0.8 can also be used, but its not recommended to go below.
@@ -157,9 +170,14 @@ export default function ChatInput() {
 				></button>
 
 				<Box className="chat-input-box">
-					<IconButton className="emoji">
-						<InsertEmoticonIcon />
-					</IconButton>
+					<div>
+						<IconButton
+							className="emoji"
+							onClick={() => setShowEmojiPicker((p) => !p)}
+						>
+							<InsertEmoticonIcon />
+						</IconButton>
+					</div>
 
 					<div className="attachment-icon-container">
 						<IconButton
@@ -187,7 +205,7 @@ export default function ChatInput() {
 							<input
 								className="file-input-elements"
 								type="file"
-								accept="image/*, video/*"
+								accept="image/*"
 								ref={imageAttachmentRef}
 								onChange={handleUploadFilePreview}
 							/>
@@ -219,15 +237,24 @@ export default function ChatInput() {
 						classes={"chat-input-field"}
 					/>
 
-					<IconButton
-						style={{
-							color: "var(--icon-color)",
-						}}
-					>
-						<MicOutlinedIcon />
-					</IconButton>
+					<div>
+						<VoiceRecordingComponent
+							sender={user}
+							receiver={partner}
+						/>
+					</div>
 				</Box>
 			</form>
+
+			<Picker
+				onEmojiClick={onEmojiClick}
+				pickerStyle={{
+					width: "100%",
+					height: showEmojiPicker ? "50vh" : "0",
+					opacity: showEmojiPicker ? "1" : "0",
+					transition: "height linear 100ms, opacity linear 500ms",
+				}}
+			/>
 
 			{showUploadPage && (
 				<div className="upload-page ">

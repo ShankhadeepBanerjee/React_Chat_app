@@ -8,17 +8,24 @@ const conversationSlice = createSlice({
 		chats: {},
 		recentChats: {},
 		alreadyFetchedChats: {},
+		unreadMessages: {},
 	},
 	reducers: {
 		setPartner: (state, action) => {
-			state.partner = action.payload;
+			let user = action.payload;
+			state.partner = user;
+			if (user) {
+				state.unreadMessages[user.email] = 0;
+			}
 		},
+
 		setChatsFor: (state, action) => {
 			const to = action.payload.to;
 			const chatsArray = action.payload.chats;
 			if (!([to] in state.chats)) state.chats[to] = chatsArray;
 			else state.chats[to] = [...state.chats[to], ...chatsArray];
 		},
+
 		addChat: (state, action) => {
 			let message = action.payload;
 			let chatToAdd =
@@ -33,10 +40,21 @@ const conversationSlice = createSlice({
 					  ])
 					: (state.chats[chatToAdd] = [message]);
 			}
+
 			state.recentChats = {
 				...state.recentChats,
 				[chatToAdd]: message,
 			};
+
+			if (message["from"] !== auth.currentUser.email) {
+				state.unreadMessages = {
+					...state.unreadMessages,
+					[chatToAdd]:
+						(state.unreadMessages[chatToAdd]
+							? state.unreadMessages[chatToAdd]
+							: 0) + 1,
+				};
+			}
 		},
 
 		setRecentChats: (state, action) => {
@@ -47,11 +65,17 @@ const conversationSlice = createSlice({
 		addToAlreadyFetched: (state, action) => {
 			state.alreadyFetchedChats[action.payload] = true;
 		},
+
+		setUnreadMessages: (state, action) => {
+			state.unreadMessages = action.payload;
+		},
+
 		resetConversation: (state) => {
 			state.partner = null;
 			state.chats = {};
 			state.recentChats = {};
 			state.alreadyFetchedChats = {};
+			state.unreadMessages = {};
 		},
 	},
 });
@@ -62,6 +86,7 @@ export const {
 	setChatsFor,
 	setRecentChats,
 	addToAlreadyFetched,
+	setUnreadMessages,
 	resetConversation,
 } = conversationSlice.actions;
 export const selectConversation = (state) => state.conversation;
