@@ -14,8 +14,7 @@ public/dist
 
 
 # Parcel cache
-.parcel-cache
-
+.parcel-cache/
 # Firebase cache
 .firebase/
 
